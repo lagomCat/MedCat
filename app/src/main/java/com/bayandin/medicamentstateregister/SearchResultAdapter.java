@@ -45,12 +45,9 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     public void onBindViewHolder(SearchResultViewHolder viewHolder, int position) {
         SearchResultItem searchResultItem = searchResultItems.get(position);
         viewHolder.textViewSearchResult.setText(searchResultItem.getText());
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(onSearchResultClickListener != null) {
-                    onSearchResultClickListener.onSearchResultClick(searchResultItem);
-                }
+        viewHolder.itemView.setOnClickListener(v -> {
+            if(onSearchResultClickListener != null) {
+                onSearchResultClickListener.onSearchResultClick(searchResultItem);
             }
         });
 

@@ -6,7 +6,7 @@ public class SearchResultItem {
 
     //Экземпляр результата поиска
 
-    private int idMedicinalProduct;
+    private final int idMedicinalProduct;
     private final Spanned text;
 
 //    public SearchResultItem(Spanned text) {

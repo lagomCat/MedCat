@@ -202,16 +202,8 @@ public class HeadingsListViewModel extends AndroidViewModel {
                 }
             }
             //Отправляем в Handler код, который необходимо выполнить после окончания поиска в базе данных
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    searchResultItemsLD.postValue(searchResultItems);
-//                        searchResultAdapter.setSearchResults(searchResultItems);
-//                        recycleViewHeadings.setAdapter(searchResultAdapter);
-//                        int countSearch = searchResultItems.size();
-//                        textViewNumberOfFound.setText("Найдено: " + countSearch);
-//                        textViewNumberOfFound.setVisibility(View.VISIBLE);
-                }
+            handler.post(() -> {
+                searchResultItemsLD.postValue(searchResultItems);
             });
         });
         thread.start();

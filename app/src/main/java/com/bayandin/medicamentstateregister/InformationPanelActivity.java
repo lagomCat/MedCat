@@ -92,13 +92,8 @@ public class InformationPanelActivity extends AppCompatActivity {
             //Достаем препарат из базы по его id
             medicinalProduct = database.medicamentsDao().getMedicinalProductById(idMedicinalProduct);
             price = medicinalProduct.getMaximumPrice();
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    //Выводим информацию в TextView
-                    setDisplayStandartMarkup();
-                }
-            });
+            //Выводим информацию в TextView
+            handler.post(this::setDisplayStandartMarkup);
         });
         thread.start();
 

@@ -16,8 +16,8 @@ public class AppPreferences {
     private static final String KEY_DATABASE_OUTDATED = "isDatabaseOutdated";
     private static final String NEW_GUID = "isFileGuid";
     private static final String CURRENT_GUID = "f25639f5-0b79-4544-9bb8-af5e57e83c8d2"; //GUID интегрированной базы данных
-    private static final String FIRST_START = "isFirstStart"; //Флаг первого старта приложения
-    private static final String LAST_MODIFIED_DB_FILE = "isLastModifiedDbFile";
+//    private static final String FIRST_START = "isFirstStart"; //Флаг первого старта приложения
+//    private static final String LAST_MODIFIED_DB_FILE = "isLastModifiedDbFile";
     private static final String SUCCESSFUL_UPDATE_DB = "isSuccessfulUpdateDB";
     private static final String ROWS_OLD_DB = "isRowsOldDB"; //Количество строк в предыдущей базе данных
     private static final String ROWS_CURRENT_DB = "isRowsCurrentDB"; //Количество строк в новой базе данных

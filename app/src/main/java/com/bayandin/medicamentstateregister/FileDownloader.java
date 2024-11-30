@@ -12,8 +12,6 @@ package com.bayandin.medicamentstateregister;
  */
 
 import android.content.Context;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 
 import org.jsoup.Jsoup;
@@ -41,8 +39,6 @@ public class FileDownloader {
     private static boolean htmlError = true;
     private static String newFileGUID;
     private final Context context;
-
-    private String fileName = "";// Поле класса
 
 
     //Конструктор
@@ -197,6 +193,8 @@ public class FileDownloader {
         if (medCatDir.exists() && medCatDir.isDirectory()) {
             File[] files = medCatDir.listFiles();
 
+            // Поле класса
+            String fileName;
             if (files != null && files.length > 0) {
                 Log.d("Точка46", "Содержимое папки MedCatData:");
                 for (File file : files) {

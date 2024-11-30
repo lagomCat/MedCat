@@ -15,7 +15,6 @@ import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.LinkedList;
@@ -37,7 +36,7 @@ public class DatabaseInfo extends AppCompatActivity {
     private TextView textViewDateOfUpdate;
     private TextView textViewFileError;
     private final LinkedList<String> logMessages = new LinkedList<>();
-    private static final int MAX_LINES = 1;
+//    private static final int MAX_LINES = 1; //Ранее была идея выводить вконсоль определнное количество строк
 
     private void initView() {
         textViewOldGuid = findViewById(R.id.textViewOldGuid);
@@ -130,9 +129,7 @@ public class DatabaseInfo extends AppCompatActivity {
 
         //Подписка на успешное обновление
         viewModel.isSuccessfulUpdateLD().observe(this, isSuccessfulUpdateLD -> {
-            if (isSuccessfulUpdateLD) {
-//                    textViewUpdateMessage.setVisibility(View.GONE);
-            }
+            //                    textViewUpdateMessage.setVisibility(View.GONE);
         });
 
 
