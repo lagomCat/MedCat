@@ -17,7 +17,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.ColorRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Locale;
@@ -89,47 +88,38 @@ public class InformationPanelActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int idMedicinalProduct = intent.getIntExtra(EXTRA_ID_MEDICINAL_PRODUCT, 0);
         database = Database.getInstance(getApplication());
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //Достаем препарат из базы по его id
-                medicinalProduct = database.medicamentsDao().getMedicinalProductById(idMedicinalProduct);
-                price = medicinalProduct.getMaximumPrice();
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        //Выводим информацию в TextView
-                        setDisplayStandartMarkup();
-                    }
-                });
-            }
+        Thread thread = new Thread(() -> {
+            //Достаем препарат из базы по его id
+            medicinalProduct = database.medicamentsDao().getMedicinalProductById(idMedicinalProduct);
+            price = medicinalProduct.getMaximumPrice();
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    //Выводим информацию в TextView
+                    setDisplayStandartMarkup();
+                }
+            });
         });
         thread.start();
 
         //Слушатель клика по кнопке "Изменить размер надбавки"
-        buttonChangeMarkup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setDisplayClickChangeMark();
-                // Показать клавиатуру
-                editTextChangeMark.requestFocus();
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.showSoftInput(editTextChangeMark, InputMethodManager.SHOW_IMPLICIT);
-                }
+        buttonChangeMarkup.setOnClickListener(v -> {
+            setDisplayClickChangeMark();
+            // Показать клавиатуру
+            editTextChangeMark.requestFocus();
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.showSoftInput(editTextChangeMark, InputMethodManager.SHOW_IMPLICIT);
             }
         });
 
         //Слушатель клика по кнопке "Вернуть надбавки по-умолчанию"
-        buttonResetMarkup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setDisplayClickResetMark();
-                // Скрыть клавиатуру
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (imm != null) {
-                    imm.hideSoftInputFromWindow(editTextChangeMark.getWindowToken(), 0);
-                }
+        buttonResetMarkup.setOnClickListener(v -> {
+            setDisplayClickResetMark();
+            // Скрыть клавиатуру
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(editTextChangeMark.getWindowToken(), 0);
             }
         });
     }
@@ -149,27 +139,27 @@ public class InformationPanelActivity extends AppCompatActivity {
         textView.setText(Html.fromHtml((formattedText), Html.FROM_HTML_MODE_LEGACY));
     }
 
-    private void setTextViewLocale(int stringResId, TextView textView, Long text) {
-        // Проверка на null для объекта Long
-        String formattedText = (text != null)
-                ? getString(stringResId, String.format(Locale.getDefault(),
-                "<font color='#C7EAF5'>%d</font>", text))
-                : getString(stringResId, "<font color='#FF0008'>" +
-                getString(R.string.value_not_available) + "</font>");
-        // Устанавливаем текст в TextView
-        textView.setText(Html.fromHtml((formattedText), Html.FROM_HTML_MODE_LEGACY));
-    }
+//    private void setTextViewLocale(int stringResId, TextView textView, Long text) {
+//        // Проверка на null для объекта Long
+//        String formattedText = (text != null)
+//                ? getString(stringResId, String.format(Locale.getDefault(),
+//                "<font color='#C7EAF5'>%d</font>", text))
+//                : getString(stringResId, "<font color='#FF0008'>" +
+//                getString(R.string.value_not_available) + "</font>");
+//        // Устанавливаем текст в TextView
+//        textView.setText(Html.fromHtml((formattedText), Html.FROM_HTML_MODE_LEGACY));
+//    }
 
-    private void setTextViewLocale(int stringResId, TextView textView, Integer text) {
-        // Проверка на null для объекта Long
-        String formattedText = (text != null)
-                ? getString(stringResId, String.format(Locale.getDefault(),
-                "<font color='#F6797D'>%d</font>", text))
-                : getString(stringResId, "<font color='#FF0008'>" +
-                getString(R.string.value_not_available) + "</font>");
-        // Устанавливаем текст в TextView
-        textView.setText(Html.fromHtml((formattedText), Html.FROM_HTML_MODE_LEGACY));
-    }
+//    private void setTextViewLocale(int stringResId, TextView textView, Integer text) {
+//        // Проверка на null для объекта Long
+//        String formattedText = (text != null)
+//                ? getString(stringResId, String.format(Locale.getDefault(),
+//                "<font color='#F6797D'>%d</font>", text))
+//                : getString(stringResId, "<font color='#FF0008'>" +
+//                getString(R.string.value_not_available) + "</font>");
+//        // Устанавливаем текст в TextView
+//        textView.setText(Html.fromHtml((formattedText), Html.FROM_HTML_MODE_LEGACY));
+//    }
 
     private void setTextViewLocale(int stringResId, TextView textView, String text) {
         // Проверка на null или пустоту для объекта String
@@ -221,7 +211,7 @@ public class InformationPanelActivity extends AppCompatActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void afterTextChanged(Editable s) {
-                textViewPercent.setTextColor(getResources().getColor(R.color.translucent_white_50));
+                textViewPercent.setTextColor(getResources().getColor(R.color.translucent_white_50, getTheme()));
                 String inputText = s.toString();
                 double inputNumber;
                 if (!inputText.isEmpty()) {
@@ -234,7 +224,7 @@ public class InformationPanelActivity extends AppCompatActivity {
                         // Показываем тост, если он еще не был показан
                         setErrorDisplay();
                         textViewPercent.setText(inputText + "%");
-                        textViewPercent.setTextColor(getResources().getColor(R.color.red));
+                        textViewPercent.setTextColor(getResources().getColor(R.color.red, getTheme()));
                         if (!isToastShown) {
                             Toast.makeText(getApplicationContext(), "Надбавка выше допустимого значения!", Toast.LENGTH_SHORT).show();
                             isToastShown = true;
@@ -246,11 +236,11 @@ public class InformationPanelActivity extends AppCompatActivity {
                         setUserMarkupCalculation(inputNumber);
                         textViewPercent.setText(inputText + "%");
                         // Задержка перед началом анимации
-                        new Handler().postDelayed(() -> {
+                        new Handler(Looper.getMainLooper()).postDelayed(() -> {
                             // Прокрутка к самому низу
                             scrollViewFullInfo.fullScroll(ScrollView.FOCUS_DOWN);
                             // Задержка перед прокруткой обратно наверх
-                            new Handler().postDelayed(() -> scrollViewFullInfo.fullScroll(ScrollView.FOCUS_UP), 500);
+                            new Handler(Looper.getMainLooper()).postDelayed(() -> scrollViewFullInfo.fullScroll(ScrollView.FOCUS_UP), 500);
                         }, 500);  // Задержка перед началом анимации — 1 секунда
                     }
                     //Если пустая строка
@@ -306,15 +296,15 @@ public class InformationPanelActivity extends AppCompatActivity {
         double roundedWholesaleMarkup = Math.round(wholesaleMarkup * 10.0) / 10.0;
         //Выводим в качестве подсказки большого размера
         textViewPercent.setText(roundedWholesaleMarkup + "%");
-        textViewPercent.setTextColor(getResources().getColor(R.color.translucent_white_50));
+        textViewPercent.setTextColor(getResources().getColor(R.color.translucent_white_50, getTheme()));
 
         // Задержка перед началом анимации
-        new Handler().postDelayed(() -> {
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
             // Прокрутка к самому низу
             scrollViewFullInfo.fullScroll(ScrollView.FOCUS_DOWN);
 
             // Задержка перед прокруткой обратно наверх
-            new Handler().postDelayed(() -> scrollViewFullInfo.fullScroll(ScrollView.FOCUS_UP), 500);
+            new Handler(Looper.getMainLooper()).postDelayed(() -> scrollViewFullInfo.fullScroll(ScrollView.FOCUS_UP), 500);
         }, 500);  // Задержка перед началом анимации — 1 секунда
 
     }

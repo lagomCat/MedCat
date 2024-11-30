@@ -16,22 +16,18 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import java.io.*;
+import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -48,12 +44,10 @@ public class FileDownloader {
 
     private String fileName = "";// Поле класса
 
-    Handler handler = new Handler(Looper.getMainLooper());
-
 
     //Конструктор
     private FileDownloader(Context context) {
-        this.context = context;
+        this.context = context.getApplicationContext();
     }
 
     //Для моего приложения допустимо применение синглтона (вроде как)
@@ -65,9 +59,9 @@ public class FileDownloader {
     }
 
 
-    public String getFileName() {
-        return fileName;
-    }
+//    public String getFileName() {
+//        return fileName;
+//    }
 
     public boolean getServerError(){
         return serverError;
@@ -273,7 +267,7 @@ public class FileDownloader {
 //        initializeMedCatDir(context);
         //Директория для загруженного файла. Получем ее через синглтон
         File medCatDir = MedCatDirectory.getMedCatDir(context);
-        for (File file : medCatDir.listFiles()) {
+        for (File file : Objects.requireNonNull(medCatDir.listFiles())) {
             file.delete();
             Log.d("Точка54", "Папка MedCatData очищена.");
             logMedCatDataFolderContents(context);

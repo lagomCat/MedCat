@@ -8,11 +8,13 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import org.apache.poi.ss.usermodel.Workbook;
-
 import com.github.pjfanning.xlsx.StreamingReader;
 
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,8 +24,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
-import java.util.concurrent.ExecutorService;
 
 public class ExcelReader {
 
@@ -198,7 +200,8 @@ public class ExcelReader {
 //                }
 //            }
             int rowCount = 0;
-            for (Row row : targetSheet) {
+                assert targetSheet != null;
+                for (Row row : targetSheet) {
                 rowCount++;
                 if (row.getRowNum() <= rowHeadingIndex) {
                     continue; //Пропускаем строки, включая заголовки
@@ -325,7 +328,7 @@ public class ExcelReader {
     }
 
     private static String formatDate(Date date) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy"); // Формат даты
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()); // Формат даты
         return sdf.format(date);
     }
 

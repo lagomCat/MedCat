@@ -15,7 +15,7 @@ public class HeadingsListAdapter extends RecyclerView.Adapter<HeadingsListAdapte
     private ArrayList<ColumnHeadingItem> columnHeadingItems = new ArrayList<>();
     private OnHeadingsClickListener onHeadingsClickListener;
 
-    public void setOnHeadingsClickListener(OnHeadingsClickListener onHeadingsClickListener) {
+    void setOnHeadingsClickListener(OnHeadingsClickListener onHeadingsClickListener) {
         this.onHeadingsClickListener = onHeadingsClickListener;
     }
 

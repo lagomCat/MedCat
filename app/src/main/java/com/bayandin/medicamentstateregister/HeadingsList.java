@@ -127,10 +127,6 @@ public class HeadingsList extends AppCompatActivity {
         //Создаем через ViewModelProvaider, чтобы вьюмодель не уничтожалась при уничтожениии активити
         viewModelInfoDB = new ViewModelProvider(this).get(DatabaseInfoViewModel.class);
         viewModelHeadings = new ViewModelProvider(this).get(HeadingsListViewModel.class);
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
-                        View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-        );
         initView();
         //Запрашиваем разрешение для уведомлений Foreground
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // Android 13+
@@ -165,69 +161,49 @@ public class HeadingsList extends AppCompatActivity {
 
 
         //Подписка на корректность листа Excel
-        viewModelHeadings.getIsCorrectSheetNameLD().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isCorrectSheetNameLD) {
-                Log.d("myLiveData4", "onChanged(Boolean isCorrectSheetName) = " + isCorrectSheetNameLD);
-                if (!isCorrectSheetNameLD) {
-                    textViewNetworkStatus.setText(R.string.file_error);
-                    textViewNetworkStatus.setBackgroundColor(getResources().getColor(R.color.red, getTheme()));
-                }
+        viewModelHeadings.getIsCorrectSheetNameLD().observe(this, isCorrectSheetNameLD -> {
+            Log.d("myLiveData4", "onChanged(Boolean isCorrectSheetName) = " + isCorrectSheetNameLD);
+            if (!isCorrectSheetNameLD) {
+                textViewNetworkStatus.setText(R.string.file_error);
+                textViewNetworkStatus.setBackgroundColor(getResources().getColor(R.color.red, getTheme()));
             }
         });
 
 
-        viewModelInfoDB.getIsUpdateInProgressLD().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isUpdateInProgressLD) {
-                Log.d("myLiveData4", "onChanged(Boolean isCorrectSheetName) = " + isUpdateInProgressLD);
-                if (isUpdateInProgressLD) {
-                    textViewNetworkStatus.setText(R.string.update_in_progress);
-                    textViewNetworkStatus.setBackgroundColor(getResources().getColor(R.color.light_sienna, getTheme()));
-                } else setTextView(viewModelInfoDB);
-            }
+        viewModelInfoDB.getIsUpdateInProgressLD().observe(this, isUpdateInProgressLD -> {
+            Log.d("myLiveData4", "onChanged(Boolean isCorrectSheetName) = " + isUpdateInProgressLD);
+            if (isUpdateInProgressLD) {
+                textViewNetworkStatus.setText(R.string.update_in_progress);
+                textViewNetworkStatus.setBackgroundColor(getResources().getColor(R.color.light_sienna, getTheme()));
+            } else setTextView(viewModelInfoDB);
         });
 
-        viewModelInfoDB.isSuccessfulUpdateLD().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isSuccessfulUpdateLD) {
-                Log.d("myLiveData5", "onChanged(Boolean isCorrectSheetName) = " + isSuccessfulUpdateLD);
-                if (isSuccessfulUpdateLD) {
-                    textViewNetworkStatus.setText(R.string.good_database);
-                    textViewNetworkStatus.setBackgroundColor(getResources().getColor(R.color.green, getTheme()));
-                } else setTextView(viewModelInfoDB);
-            }
+        viewModelInfoDB.isSuccessfulUpdateLD().observe(this, isSuccessfulUpdateLD -> {
+            Log.d("myLiveData5", "onChanged(Boolean isCorrectSheetName) = " + isSuccessfulUpdateLD);
+            if (isSuccessfulUpdateLD) {
+                textViewNetworkStatus.setText(R.string.good_database);
+                textViewNetworkStatus.setBackgroundColor(getResources().getColor(R.color.green, getTheme()));
+            } else setTextView(viewModelInfoDB);
         });
 
         //Подписка на результаты поиска
-        viewModelHeadings.getSearchResultItemsLD().observe(this, new Observer<ArrayList<SearchResultItem>>() {
-            @Override
-            public void onChanged(ArrayList<SearchResultItem> searchResultItemsLD) {
-                searchResultAdapter.setSearchResults(searchResultItemsLD);
-                recycleViewHeadings.setAdapter(searchResultAdapter);
-                isHeadingsListAdapter = false;
-                int countSearch = searchResultItemsLD.size();
-                textViewNumberOfFound.setText("Найдено: " + countSearch);
-                textViewNumberOfFound.setVisibility(View.VISIBLE);
-            }
+        viewModelHeadings.getSearchResultItemsLD().observe(this, searchResultItemsLD -> {
+            searchResultAdapter.setSearchResults(searchResultItemsLD);
+            recycleViewHeadings.setAdapter(searchResultAdapter);
+            isHeadingsListAdapter = false;
+            int countSearch = searchResultItemsLD.size();
+            textViewNumberOfFound.setText("Найдено: " + countSearch);
+            textViewNumberOfFound.setVisibility(View.VISIBLE);
         });
 
-        headingsListAdapter.setOnHeadingsClickListener(new HeadingsListAdapter.OnHeadingsClickListener() {
-            @Override
-            public void onHeadingClick(ColumnHeadingItem columnHeadingItemOnClick) {
-                //Код, который выполняется при клике на заголовке столбца бла бла бла
-                showAfterClickToHeading(columnHeadingItemOnClick);
-            }
-        });
+        //Код, который выполняется при клике на заголовке столбца бла бла бла
+        headingsListAdapter.setOnHeadingsClickListener(this::showAfterClickToHeading);
 
         //Код, который вызывается при клике на элементе поиска
-        searchResultAdapter.setOnSearchResultClickListener(new SearchResultAdapter.OnSearchResultClickListener() {
-            @Override
-            public void onSearchResultClick(SearchResultItem searchResultItem) {
-                int id = searchResultItem.getIdMedicinalProduct();
-                Intent intent = InformationPanelActivity.newIntent(HeadingsList.this, id);
-                startActivity(intent);
-            }
+        searchResultAdapter.setOnSearchResultClickListener(searchResultItem -> {
+            int id = searchResultItem.getIdMedicinalProduct();
+            Intent intent = InformationPanelActivity.newIntent(HeadingsList.this, id);
+            startActivity(intent);
         });
 
         //Метод, который вызывается при клике на TextView "Статус базы данных"
@@ -440,19 +416,16 @@ public class HeadingsList extends AppCompatActivity {
                     handler.removeCallbacks(searchRunnable);
                 }
                 // Создаем новый Runnable для выполнения поиска
-                searchRunnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        String input = s.toString().trim();
-                        if (!input.isEmpty()) {
+                searchRunnable = () -> {
+                    String input = s.toString().trim();
+                    if (!input.isEmpty()) {
 //                                    textViewQuotes.setVisibility(View.GONE);
-                            String sqlId = columnHeadingItemOnClick.getSqlId();
-                            //Убираем все пробелы в начале введенной строки
-                            input = s.toString().replaceAll("^\\s+", "");
-                            //Убираем каждый второй пробел между символами
-                            input = input.replaceAll("\\s{2,}", " ");
-                            viewModelHeadings.showResultsList(input, sqlId);
-                        }
+                        String sqlId = columnHeadingItemOnClick.getSqlId();
+                        //Убираем все пробелы в начале введенной строки
+                        input = s.toString().replaceAll("^\\s+", "");
+                        //Убираем каждый второй пробел между символами
+                        input = input.replaceAll("\\s{2,}", " ");
+                        viewModelHeadings.showResultsList(input, sqlId);
                     }
                 };
                 // Запланируем выполнение Runnable с задержкой, чтобы не запускалось слишком
@@ -467,13 +440,10 @@ public class HeadingsList extends AppCompatActivity {
             }
         });
         //Метод, который вызывается при клике на кнопку "Назад"
-        myButtonBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                startActivity(newIntent(HeadingsList.this));
-                isHeadingsListAdapter = true;
-            }
+        myButtonBack.setOnClickListener(v -> {
+            finish();
+            startActivity(newIntent(HeadingsList.this));
+            isHeadingsListAdapter = true;
         });
     }
 

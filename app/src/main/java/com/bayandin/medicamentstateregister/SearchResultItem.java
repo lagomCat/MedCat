@@ -9,9 +9,9 @@ public class SearchResultItem {
     private int idMedicinalProduct;
     private final Spanned text;
 
-    public SearchResultItem(Spanned text) {
-        this.text = text;
-    }
+//    public SearchResultItem(Spanned text) {
+//        this.text = text;
+//    }
 
     public SearchResultItem(int idMedicinalProduct, Spanned text) {
         this.idMedicinalProduct = idMedicinalProduct;

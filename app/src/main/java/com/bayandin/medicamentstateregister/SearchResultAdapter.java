@@ -1,7 +1,6 @@
 package com.bayandin.medicamentstateregister;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,7 +20,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     private OnSearchResultClickListener onSearchResultClickListener;
 
 
-    public void setOnSearchResultClickListener(OnSearchResultClickListener onSearchResultClickListener) {
+    void setOnSearchResultClickListener(OnSearchResultClickListener onSearchResultClickListener) {
         this.onSearchResultClickListener = onSearchResultClickListener;
     }
 
@@ -70,9 +69,9 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     }
 
 
-    class SearchResultViewHolder extends RecyclerView.ViewHolder {
+    public static class SearchResultViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView textViewSearchResult;
+        private final TextView textViewSearchResult;
 
         public SearchResultViewHolder(@NonNull View itemView) {
             super(itemView);

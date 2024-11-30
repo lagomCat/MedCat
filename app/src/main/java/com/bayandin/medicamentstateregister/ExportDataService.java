@@ -71,32 +71,22 @@ public class ExportDataService extends Service {
             ExportData exportData = ExportData.getInstance(this);
             exportData.setExportDataService(this); // Регистрируем ссылку на сервис в классе ExportData
 
-            if (exportData != null) {
-                Thread thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //Если это не апдейт, инициированный главной страницей
-                        if (!appPreferences.isAutoUpdate()) {
-                            //Запускаем проверку наличия нового файла на сервере
-                            fileDownloader.checkDatabaseRelevance();
-                        }
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (appPreferences.isDatabaseOutdated()) {
-                                    Log.d("Точка28", "Foreground: вызов updateDatabase");
-                                    exportData.updateDatabase();
-                                } else stopSelf();
-                            }
-                        });
-                    }
+            Thread thread = new Thread(() -> {
+                //Если это не апдейт, инициированный главной страницей
+                if (!appPreferences.isAutoUpdate()) {
+                    //Запускаем проверку наличия нового файла на сервере
+                    fileDownloader.checkDatabaseRelevance();
+                }
+                handler.post(() -> {
+                    if (appPreferences.isDatabaseOutdated()) {
+                        Log.d("Точка28", "Foreground: вызов updateDatabase");
+                        exportData.updateDatabase();
+                    } else stopSelf();
                 });
-                thread.start();
-                isRunning = true;//Взводим флаг старта Foreground
+            });
+            thread.start();
+            isRunning = true;//Взводим флаг старта Foreground
 //                stopSelf(); // Завершаем сервис после выполнения (перенес непосредственно в ExportData)
-            } else {
-                Log.e("Точка29", "Foreground: ExportData равен null");
-            }
 
             return START_STICKY; // Не перезапускать сервис при уничтожении
         }

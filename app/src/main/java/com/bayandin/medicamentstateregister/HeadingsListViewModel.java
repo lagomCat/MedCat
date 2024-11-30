@@ -16,7 +16,6 @@ import androidx.sqlite.db.SupportSQLiteQuery;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class HeadingsListViewModel extends AndroidViewModel {
 
@@ -52,23 +51,22 @@ public class HeadingsListViewModel extends AndroidViewModel {
     @SuppressLint("SetTextI18n")
     public void showResultsList(String input, String sqlId) {
         // Отправляем работу с поиском в базе данных в фоновый поток
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String[] twoPartsSearch = input.split(" "); // Разделяем строку по пробелу
-                if (twoPartsSearch.length < 2) {
-                    medicinalProducts = searchMedicinalProducts(twoPartsSearch[0], sqlId);
-                } else {
-                    medicinalProducts = searchMedicinalProducts(twoPartsSearch[0], twoPartsSearch[1], sqlId, "owner");
-                }
-                searchResultItems.clear();
-                for (MedicinalProduct medicinalProduct : medicinalProducts){
-                    if (Objects.equals(sqlId, SQL_ID1)) {
-                /*
-                Будем выводить результаты поиска из трех атрибутов объекта medicinalProduct.
-                В searchResultItem будет конкатенация этих атрибутов и перевод в HTML формат
-                в методе stringToHTML, чтобы выводить текст в разном цвете
-                */
+        Thread thread = new Thread(() -> {
+            String[] twoPartsSearch = input.split(" "); // Разделяем строку по пробелу
+            if (twoPartsSearch.length < 2) {
+                medicinalProducts = searchMedicinalProducts(twoPartsSearch[0], sqlId);
+            } else {
+                medicinalProducts = searchMedicinalProducts(twoPartsSearch[0], twoPartsSearch[1], sqlId);
+            }
+            searchResultItems.clear();
+            for (MedicinalProduct medicinalProduct : medicinalProducts){
+                switch (sqlId) {
+                    case SQL_ID1: {
+            /*
+            Будем выводить результаты поиска из трех атрибутов объекта medicinalProduct.
+            В searchResultItem будет конкатенация этих атрибутов и перевод в HTML формат
+            в методе stringToHTML, чтобы выводить текст в разном цвете
+            */
                         SearchResultItem searchResultItem = new SearchResultItem(
                                 medicinalProduct.getId(),
                                 stringToHTML(medicinalProduct.getInternationalName(),                                                                       //color1
@@ -76,8 +74,11 @@ public class HeadingsListViewModel extends AndroidViewModel {
                                         medicinalProduct.getMaximumPrice().toString(),                                                                      //color3
                                         medicinalProduct.getQuantityInPackaging() != null ? medicinalProduct.getQuantityInPackaging().toString() : "N/A",  //color4
                                         medicinalProduct.getBarcode() != null ? medicinalProduct.getBarcode() : "N/A"));                         //color5
+
                         searchResultItems.add(searchResultItem);
-                    } else if (Objects.equals(sqlId, SQL_ID2)) {
+                        break;
+                    }
+                    case SQL_ID2: {
                         SearchResultItem searchResultItem = new SearchResultItem(
                                 medicinalProduct.getId(),
                                 stringToHTML(medicinalProduct.getTradeName(),
@@ -86,7 +87,9 @@ public class HeadingsListViewModel extends AndroidViewModel {
                                         medicinalProduct.getQuantityInPackaging() != null ? medicinalProduct.getQuantityInPackaging().toString() : "N/A",
                                         medicinalProduct.getBarcode() != null ? medicinalProduct.getBarcode() : "N/A"));
                         searchResultItems.add(searchResultItem);
-                    } else if (Objects.equals(sqlId, SQL_ID3)) {
+                        break;
+                    }
+                    case SQL_ID3: {
                         SearchResultItem searchResultItem = new SearchResultItem(
                                 medicinalProduct.getId(),
                                 stringToHTML(medicinalProduct.getDosageForm(),
@@ -95,7 +98,9 @@ public class HeadingsListViewModel extends AndroidViewModel {
                                         medicinalProduct.getQuantityInPackaging() != null ? medicinalProduct.getQuantityInPackaging().toString() : "N/A",
                                         medicinalProduct.getBarcode() != null ? medicinalProduct.getBarcode() : "N/A"));
                         searchResultItems.add(searchResultItem);
-                    } else if (Objects.equals(sqlId, SQL_ID4)) {
+                        break;
+                    }
+                    case SQL_ID4: {
                         SearchResultItem searchResultItem = new SearchResultItem(
                                 medicinalProduct.getId(),
                                 stringToHTML(medicinalProduct.getOwner(),
@@ -104,7 +109,9 @@ public class HeadingsListViewModel extends AndroidViewModel {
                                         medicinalProduct.getQuantityInPackaging() != null ? medicinalProduct.getQuantityInPackaging().toString() : "N/A",
                                         medicinalProduct.getBarcode() != null ? medicinalProduct.getBarcode() : "N/A"));
                         searchResultItems.add(searchResultItem);
-                    } else if (Objects.equals(sqlId, SQL_ID5)) {
+                        break;
+                    }
+                    case SQL_ID5: {
                         SearchResultItem searchResultItem = new SearchResultItem(
                                 medicinalProduct.getId(),
                                 stringToHTML(medicinalProduct.getChemicalClassification(),
@@ -113,7 +120,9 @@ public class HeadingsListViewModel extends AndroidViewModel {
                                         medicinalProduct.getQuantityInPackaging() != null ? medicinalProduct.getQuantityInPackaging().toString() : "N/A",
                                         medicinalProduct.getBarcode() != null ? medicinalProduct.getBarcode() : "N/A"));
                         searchResultItems.add(searchResultItem);
-                    } else if (Objects.equals(sqlId, SQL_ID6)) {
+                        break;
+                    }
+                    case SQL_ID6: {
                         SearchResultItem searchResultItem = new SearchResultItem(
                                 medicinalProduct.getId(),
                                 stringToHTML(medicinalProduct.getInternationalName(),
@@ -122,7 +131,9 @@ public class HeadingsListViewModel extends AndroidViewModel {
                                         medicinalProduct.getQuantityInPackaging() != null ? medicinalProduct.getQuantityInPackaging().toString() : "N/A",
                                         medicinalProduct.getBarcode() != null ? medicinalProduct.getBarcode() : "N/A"));
                         searchResultItems.add(searchResultItem);
-                    } else if (Objects.equals(sqlId, SQL_ID7)) {
+                        break;
+                    }
+                    case SQL_ID7: {
                         SearchResultItem searchResultItem = new SearchResultItem(
                                 medicinalProduct.getId(),
                                 stringToHTML(medicinalProduct.getMaximumPrice().toString(),
@@ -131,7 +142,9 @@ public class HeadingsListViewModel extends AndroidViewModel {
                                         medicinalProduct.getQuantityInPackaging() != null ? medicinalProduct.getQuantityInPackaging().toString() : "N/A",
                                         medicinalProduct.getBarcode() != null ? medicinalProduct.getBarcode() : "N/A"));
                         searchResultItems.add(searchResultItem);
-                    } else if (Objects.equals(sqlId, SQL_ID8)) {
+                        break;
+                    }
+                    case SQL_ID8: {
                         SearchResultItem searchResultItem = new SearchResultItem(
                                 medicinalProduct.getId(),
                                 stringToHTML(medicinalProduct.getPricePrimaryPackaging().toString(),
@@ -140,7 +153,9 @@ public class HeadingsListViewModel extends AndroidViewModel {
                                         medicinalProduct.getQuantityInPackaging() != null ? medicinalProduct.getQuantityInPackaging().toString() : "N/A",
                                         medicinalProduct.getBarcode() != null ? medicinalProduct.getBarcode() : "N/A"));
                         searchResultItems.add(searchResultItem);
-                    } else if (Objects.equals(sqlId, SQL_ID9)) {
+                        break;
+                    }
+                    case SQL_ID9: {
                         SearchResultItem searchResultItem = new SearchResultItem(
                                 medicinalProduct.getId(),
                                 stringToHTML(medicinalProduct.getRuNumber(),
@@ -149,7 +164,9 @@ public class HeadingsListViewModel extends AndroidViewModel {
                                         medicinalProduct.getQuantityInPackaging() != null ? medicinalProduct.getQuantityInPackaging().toString() : "N/A",
                                         medicinalProduct.getBarcode() != null ? medicinalProduct.getBarcode() : "N/A"));
                         searchResultItems.add(searchResultItem);
-                    } else if (Objects.equals(sqlId, SQL_ID10)) {
+                        break;
+                    }
+                    case SQL_ID10: {
                         SearchResultItem searchResultItem = new SearchResultItem(
                                 medicinalProduct.getId(),
                                 stringToHTML(medicinalProduct.getPriceRegistrationDate(),
@@ -158,16 +175,20 @@ public class HeadingsListViewModel extends AndroidViewModel {
                                         medicinalProduct.getQuantityInPackaging() != null ? medicinalProduct.getQuantityInPackaging().toString() : "N/A",
                                         medicinalProduct.getBarcode() != null ? medicinalProduct.getBarcode() : "N/A"));
                         searchResultItems.add(searchResultItem);
-                    } else if (Objects.equals(sqlId, SQL_ID11)) {
+                        break;
+                    }
+                    case SQL_ID11: {
                         SearchResultItem searchResultItem = new SearchResultItem(
                                 medicinalProduct.getId(),
-                                stringToHTML(medicinalProduct.getBarcode().toString(),
+                                stringToHTML(medicinalProduct.getBarcode(),
                                         medicinalProduct.getInternationalName(),
                                         medicinalProduct.getMaximumPrice().toString(),
                                         medicinalProduct.getQuantityInPackaging() != null ? medicinalProduct.getQuantityInPackaging().toString() : "N/A",
                                         medicinalProduct.getBarcode() != null ? medicinalProduct.getBarcode() : "N/A"));
                         searchResultItems.add(searchResultItem);
-                    } else if (Objects.equals(sqlId, SQL_ID12)) {
+                        break;
+                    }
+                    case SQL_ID12: {
                         SearchResultItem searchResultItem = new SearchResultItem(
                                 medicinalProduct.getId(),
                                 stringToHTML(medicinalProduct.getEffectiveDate(),
@@ -176,21 +197,22 @@ public class HeadingsListViewModel extends AndroidViewModel {
                                         medicinalProduct.getQuantityInPackaging() != null ? medicinalProduct.getQuantityInPackaging().toString() : "N/A",
                                         medicinalProduct.getBarcode() != null ? medicinalProduct.getBarcode() : "N/A"));
                         searchResultItems.add(searchResultItem);
+                        break;
                     }
                 }
-                //Отправляем в Handler код, который необходимо выполнить после окончания поиска в базе данных
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        searchResultItemsLD.postValue(searchResultItems);
+            }
+            //Отправляем в Handler код, который необходимо выполнить после окончания поиска в базе данных
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    searchResultItemsLD.postValue(searchResultItems);
 //                        searchResultAdapter.setSearchResults(searchResultItems);
 //                        recycleViewHeadings.setAdapter(searchResultAdapter);
 //                        int countSearch = searchResultItems.size();
 //                        textViewNumberOfFound.setText("Найдено: " + countSearch);
 //                        textViewNumberOfFound.setVisibility(View.VISIBLE);
-                    }
-                });
-            }
+                }
+            });
         });
         thread.start();
     }
@@ -209,15 +231,15 @@ public class HeadingsListViewModel extends AndroidViewModel {
         return medicinalProducts;
     }
 
-    private List<MedicinalProduct> searchMedicinalProducts(String input1, String input2, String columnName1, String columnName2) {
+    private List<MedicinalProduct> searchMedicinalProducts(String input1, String input2, String columnName1) {
         // Проверка на валидность имен столбцов
-        if (columnName1 == null || columnName1.isEmpty() || columnName2 == null || columnName2.isEmpty()) {
+        if (columnName1 == null || columnName1.isEmpty()) {
             throw new IllegalArgumentException("Column names cannot be null or empty");
         }
         // Формирование SQL-запроса
         String sql = "SELECT * FROM medicamentsRegister WHERE "
                 + columnName1 + " LIKE ? AND "
-                + columnName2 + " LIKE ? LIMIT 100";
+                + "owner" + " LIKE ? LIMIT 100";
         // Создание объекта SupportSQLiteQuery с параметрами
         SupportSQLiteQuery query = new SimpleSQLiteQuery(sql, new Object[]{"%" + input1 + "%", "%" + input2 + "%"});
         medicinalProducts = database.medicamentsDao().searchByColumn(query);

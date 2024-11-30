@@ -140,19 +140,19 @@ public class AppPreferences {
     }
 
     // Метод для получения флага успешного обновления базы данных
-    public boolean isSuccessfulUpdateDB() {
-        return sharedPreferences.getBoolean(SUCCESSFUL_UPDATE_DB, false);
-    }
+//    public boolean isSuccessfulUpdateDB() {
+//        return sharedPreferences.getBoolean(SUCCESSFUL_UPDATE_DB, false);
+//    }
 
     //Метод для сохранения даты последнего изменения файла базы данных
-    public void setLastModifiedDbFile (long lastModifiedDbFile) {
-        sharedPreferences.edit().putLong(LAST_MODIFIED_DB_FILE, lastModifiedDbFile).apply();
-    }
+//    public void setLastModifiedDbFile (long lastModifiedDbFile) {
+//        sharedPreferences.edit().putLong(LAST_MODIFIED_DB_FILE, lastModifiedDbFile).apply();
+//    }
 
     //Метод для получения даты последнего изменения файла базы данных
-    public long getLastModifiedDbFile () {
-        return sharedPreferences.getLong(LAST_MODIFIED_DB_FILE, 0);
-    }
+//    public long getLastModifiedDbFile () {
+//        return sharedPreferences.getLong(LAST_MODIFIED_DB_FILE, 0);
+//    }
 
 
     //Метод для сохранения текущего GUID
@@ -186,14 +186,14 @@ public class AppPreferences {
     }
 
     //Метод для сброса флага первого запуска приложения
-    public void resetFirstStart(boolean isFirstStart) {
-        sharedPreferences.edit().putBoolean(FIRST_START, isFirstStart).apply();
-    }
+//    public void resetFirstStart(boolean isFirstStart) {
+//        sharedPreferences.edit().putBoolean(FIRST_START, isFirstStart).apply();
+//    }
 
     //Метод для получения флага первого старта приложения
-    public boolean isFirstStart() {
-        return sharedPreferences.getBoolean(FIRST_START, true);
-    }
+//    public boolean isFirstStart() {
+//        return sharedPreferences.getBoolean(FIRST_START, true);
+//    }
 
     // Другие методы для работы с настройками можно добавлять здесь
 }
