@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">MedCat</string>
+    <string name="application_version">Version 2.3 by lagomCat</string>
+    <string name="main_heading">ГОСУДАРСТВЕННЫЙ РЕЕСТР ЛЕКАРСТВЕННЫХ СРЕДСТВ</string>
+    <string name="button_set_bd">ВЫБРАТЬ БАЗУ ДАННЫХ</string>
+    <string name="button_update_bd">ОБНОВИТЬ ДАННЫЕ</string>
+    <string name="title_heading_list"><u>Выберите для поиска</u></string>
+    <string name="back_button">Назад</string>
+    <string name="search_heading">Поиск</string>
+    <string name="drag_full_information">Информация о препарате</string>
+    <string name="value_not_available">N/A</string>
+
+    <string name="international_name">Международное наименование: %1$s</string>
+    <string name="trade_name">Торговое наименование: %1$s</string>
+    <string name="owner">Производитель: %1$s</string>
+    <string name="chemical_classification">Код АТХ: %1$s</string>
+    <string name="dosage_form">Лекарственная форма, дозировка, упаковка (полная): %1$s</string>
+    <string name="rice_registration_date">Дата регистрации цены (№ решения): %1$s</string>
+    <string name="effective_date">Дата вступления в силу: %1$s</string>
+    <string name="ru_number">№ РУ: %1$s</string>
+    <string name="quantity_in_packaging">Количество в потреб. упаковке: %1$s шт.</string>
+    <string name="barcode">Штрихкод (EAN13): %1$s</string>
+    <string name="price_primary_packaging">Цена указана для первич. упаковки: %1$s руб.</string>
+    <string name="maximum_price">Цена в реестре: %1$s руб.</string>
+    <string name="markup_price">Цена с надбавкой без НДС: %1$s руб.</string>
+    <string name="price_tax">Цена с надбавкой и НДС: %1$s руб.</string>
+    <string name="tax">Сумма НДС: %1$s руб.</string>
+    <string name="markup">Сумма надбавки: %1$s руб.</string>
+    <string name="button_change_markup">Изменить размер надбавки</string>
+    <string name="edit_text_change_mark">Введите размер надбавки в %</string>
+    <string name="button_reset_markup">Вернуть стандартные значения</string>
+    <string name="database_out_date">Локальная база данных устарела! </string>
+    <string name="good_database">База данных актуальна</string>
+    <string name="update_in_progress">База данных в процессе обновления.\n!КЛИК! для дополнительной информации.</string>
+    <string name="server_error">Нет связи с сервером!</string>
+    <string name="html_error">Файл с данными не найден!</string>
+    <string name="button_back_database_info">Назад</string>
+    <string name="old_guid">Версия базы в приложении: %1$s</string>
+    <string name="new_guid">Версия базы на сайте: %1$s</string>
+    <string name="file_xslx_info">Заменить файл? %1$s</string>
+    <string name="test_button">Вернуться на главный экран</string>
+    <string name="information_message_update">ВАЖНО: Для автоматического обновления базы данных в ночное время, необходимо предоставить приложению разрешение работать в фоновом режиме. Перейдите в настройки приложения по кнопке ниже. ИСПОЛЬЗОВАНИЕ БАТАРЕИ >> РАЗРЕШИТЬ РАБОТУ В ФОНОВОМ РЕЖИМЕ.  </string>
+    <string name="date_of_update">Дата последнего успешного обновления базы данных: %1$s</string>
+    <string name="database_update">В процессе обновления…</string>
+    <string name="file_error">Файл обновления поврежден</string>
+    <string name="old_rows">Количество строк в предыдущей таблице: %1$d</string>
+    <string name="new_rows">Количество строк в новой таблице: %1$d</string>
+    <string name="incorrect_sheet">Не найден целевой лист в таблице Excel</string>
+    <string name="permit_button">Разрешить работу в фоновом режиме</string>
+
+
+</resources>

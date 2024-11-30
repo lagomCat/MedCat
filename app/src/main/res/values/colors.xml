@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="red">#95EE1511</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="translucent_white_50">#50FFFFFF</color>
+    <color name="dark_green">#006400</color> <!-- Фон результатов поиска -->
+    <color name="green">#4CAF50</color> <!-- Зеленый цвет -->
+    <color name="turquoise">#529FA7</color> <!-- Цвет заголовков столбцов -->
+    <color name="blue">#4452C1</color> <!-- Фон заголовков -->
+    <color name="very_dark_green">#123B1D</color> <!-- <Бэкграунд заголовка строки поиска> -->
+    <color name="translucent_white_80">#80FFFFFF</color> <!-- <Бэкграунд заголовка строки поиска> -->
+    <color name="moray_eel">#196D94</color> <!-- <Бэкграунд полной информации о товаре> -->
+    <color name="dark_turquoise">#0F4E6B</color> <!-- <Бэкграунд полной информации о товаре> -->
+    <color name="dark_blue">#023479</color> <!-- <Бэкграунд заголовка полной информации о товаре> -->
+    <color name="gentian_blue">#0B374C</color> <!-- <Бэкграунд резульатов расчетов полной информации о товаре> -->
+    <color name="light_sienna">#E08C00</color> <!-- <Бэкграунд процесса обновления> -->
+
+
+
+    <!-- Другие цвета -->
+</resources>

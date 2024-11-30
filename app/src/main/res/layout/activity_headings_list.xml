@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/gentian_blue"
+    android:id="@+id/rootView">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewHeadingSearch1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/very_dark_green"
+            android:padding="5dp"
+            android:text=""
+            android:textAlignment="textStart"
+            android:textColor="@color/white"
+            android:textSize="5sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <EditText
+            android:id="@+id/editTextInputSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:autofillHints=""
+            android:inputType="textNoSuggestions"
+            android:padding="10dp"
+            android:text=""
+            android:textAlignment="viewStart"
+            android:textColor="@color/white"
+            android:textColorHint="@color/translucent_white_80"
+            android:textCursorDrawable="@drawable/custom_cursor"
+            android:textSize="24sp"
+            android:visibility="gone"
+            tools:hint="Поисковый запрос: "
+            tools:ignore="LabelFor,RtlSymmetry"
+            tools:visibility="visible" />
+
+
+        <TextView
+            android:id="@+id/textViewHeadingList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/blue"
+            android:padding="5dp"
+            android:text="@string/title_heading_list"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            android:visibility="visible"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/textViewNumberOfFound"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:background="@color/very_dark_green"
+            android:paddingStart="5dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="5dp"
+            android:text=""
+            android:textAlignment="textEnd"
+            android:textColor="@color/translucent_white_80"
+            android:textSize="11sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginBottom="19dp"
+            android:id="@+id/recycleViewHeadings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewQuotes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/greatvibesregular"
+        android:padding="5dp"
+        android:text=""
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        tools:text="Интуитивное знание — это самосуществующий образ сознания, отличный от интеллектуального или чувственного. В то время как восприятие сообщает нам о внешних свойствах объекта, а интеллект распознаёт закон, в котором объект предстаёт как частный случай более общего явления, интуиция даёт представление о глубине, значении, характере объекта. Радхакришнан."
+        tools:visibility="visible" />
+
+
+    <TextView
+        android:id="@+id/textViewNetworkStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/red"
+        android:text=""
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/textViewHeadingSearch2"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/textViewHeadingSearch2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/very_dark_green"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:text="@string/application_version"
+        android:textAlignment="textStart"
+        android:textColor="@color/white"
+        android:textSize="8sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        tools:ignore="RtlSymmetry"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/myButtonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="@string/back_button"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/textViewHeadingSearch2"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        tools:visibility="visible" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
