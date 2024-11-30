@@ -203,7 +203,6 @@ public class FileDownloader {
                 }
             } else {
                 Log.d("Точка48", "Папка MedCatData пуста.");
-                fileName = "";
             }
         } else {
             Log.d("Точка49", "Папка MedCatData не существует.");

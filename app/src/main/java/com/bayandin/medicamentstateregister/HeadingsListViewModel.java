@@ -202,9 +202,7 @@ public class HeadingsListViewModel extends AndroidViewModel {
                 }
             }
             //Отправляем в Handler код, который необходимо выполнить после окончания поиска в базе данных
-            handler.post(() -> {
-                searchResultItemsLD.postValue(searchResultItems);
-            });
+            handler.post(() -> searchResultItemsLD.postValue(searchResultItems));
         });
         thread.start();
     }
