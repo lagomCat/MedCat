@@ -377,6 +377,7 @@ public class HeadingsList extends AppCompatActivity {
     }
 
     private void showAfterClickToHeading(ColumnHeadingItem columnHeadingItemOnClick){
+        columnHeadingItems.removeIf(item -> item != columnHeadingItemOnClick);
         isHeadingsListAdapter = false;
         textViewNetworkStatus.setVisibility(View.GONE);
         textViewHeadingSearch1.setVisibility(View.VISIBLE);

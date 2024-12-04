@@ -51,7 +51,7 @@ public class HeadingsListAdapter extends RecyclerView.Adapter<HeadingsListAdapte
                     //Важно: здесь сравнивается не содержимое объектов, а ссылки на них.
                     // Если нужно сравнивать по содержимому, то в классе объекта нужно переопередить
                     //методы equals() и hashCode(). Это позволит использовать такие методы, как
-                    columnHeadingItems.removeIf(item -> item != columnHeadingItem);
+//                    columnHeadingItems.removeIf(item -> item != columnHeadingItem);
                     //Toast.makeText(v.getContext(), sqlId, Toast.LENGTH_LONG).show();
                     // Обновляем RecyclerView
                      notifyDataSetChanged();

@@ -55,7 +55,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
             if (event.getAction() == MotionEvent.ACTION_DOWN) { // Обрабатываем только момент касания
                 hideKeyboard(v);
             }
-            return false; // Возвращаем true, чтобы сигнализировать, что событие обработано
+            return false; // Возвращаем false, чтобы сигнализировать, что может последовать клик после касания
         });
 
     }

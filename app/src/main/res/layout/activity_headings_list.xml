@@ -79,11 +79,12 @@
             tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginBottom="19dp"
             android:id="@+id/recycleViewHeadings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            android:layout_marginBottom="19dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/activity_heading_item" />
 
 
     </LinearLayout>
@@ -105,7 +106,7 @@
         app:layout_constraintStart_toStartOf="@+id/linearLayout"
         app:layout_constraintTop_toTopOf="@+id/linearLayout"
         tools:text="Интуитивное знание — это самосуществующий образ сознания, отличный от интеллектуального или чувственного. В то время как восприятие сообщает нам о внешних свойствах объекта, а интеллект распознаёт закон, в котором объект предстаёт как частный случай более общего явления, интуиция даёт представление о глубине, значении, характере объекта. Радхакришнан."
-        tools:visibility="visible" />
+        tools:visibility="gone" />
 
 
     <TextView
